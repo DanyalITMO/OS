@@ -1,0 +1,29 @@
+#include <windows.h>
+#include <stdio.h>
+#include <string.h>
+#include <conio.h>
+STARTUPINFO startupInfo;
+PROCESS_INFORMATION processInfo;
+
+char* lpCommandLine = ("C:\\Windows\\NOTEPAD.EXE temp.txt");
+
+using namespace std;
+
+void main(int argc, char* argv[])
+{
+	//strcpy(lpCommandLine, "C:\\WINNT\SYSTEM32\\NOTEPAD.EXE temp.txt");
+	ZeroMemory(&startupInfo, sizeof(STARTUPINFO));
+	startupInfo.cb = sizeof(startupInfo);
+	if (!CreateProcess(NULL, lpCommandLine, NULL, NULL, FALSE,
+		HIGH_PRIORITY_CLASS | CREATE_NEW_CONSOLE, NULL, NULL, &startupInfo, &processInfo))
+	{
+		fprintf(stderr, "CreateProcess failed on error %d\n", GetLastError());
+		ExitProcess(1);
+	}
+
+
+CloseHandle(processInfo.hThread);
+CloseHandle(processInfo.hProcess);
+
+system("pause");
+}

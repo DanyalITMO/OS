@@ -1,0 +1,41 @@
+#include <windows.h>
+#include <stdio.h>
+#include <string.h>
+#include <conio.h>
+
+using namespace std;
+
+
+DWORD WINAPI str1(LPVOID IpParameter)
+{
+	puts("Hello 1");
+	return 0;
+}
+
+DWORD WINAPI str2(LPVOID IpParameter)
+{
+	puts("Hello 2");
+	return 0;
+}
+
+
+
+int main(int argc, char* argv[])
+{
+	int theArg;
+	DWORD targetThreadId;
+	HANDLE thandle1, thandle2;
+	unsigned tArg, tID;
+
+	for (;;){
+		CreateThread(NULL, 0, str1, &theArg, 0, &targetThreadId);
+		Sleep(1000);
+		CreateThread(NULL, 0, str2, &theArg, 0, &targetThreadId);
+		Sleep(1000);
+
+		puts("Hello  main");
+		Sleep(1000);
+
+	}
+	return 0;
+}
